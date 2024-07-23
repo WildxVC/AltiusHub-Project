@@ -1,12 +1,14 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_jwt.settings import api_settings
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
 
-
+from .models import Profile
+from .serializers import ProfileSerializer
 # Create your views here.
 class RegisterView(APIView):
     def post(self, request):
@@ -40,3 +42,11 @@ class LoginView(APIView):
         else:
             return Response({'error': 'Invalid Credentials'},status=status.HTTP_400_BAD_REQUEST)
             
+class ProfileDetailView(generics.RetrieveUpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class=ProfileSerializer
+    permission_classes=[IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user.profile
+    
