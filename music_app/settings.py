@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+        # Django Elasticsearch integration
+    'django_elasticsearch_dsl',
+    # Django REST framework Elasticsearch integration (this package)
+    'django_elasticsearch_dsl_drf',
     'rest_framework_jwt',
     'users',
     'tasks',
@@ -136,4 +140,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
 }
